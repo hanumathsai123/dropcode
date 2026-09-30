@@ -1,0 +1,1 @@
+export type Share={id:string;share_code:string;kind:'text'|'document';title:string|null;content:string|null;file_path:string|null;file_name:string|null;file_size:number|null;mime_type:string|null;expires_at:string;max_views:number;view_count:number;download_count:number;created_at:string;last_accessed_at:string|null};
