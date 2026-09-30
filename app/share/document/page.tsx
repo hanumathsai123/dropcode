@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import PromotionCarousel from "@/components/PromotionCarousel";
 export default function DocumentShare() {
   const [file, setFile] = useState<File | null>(null);
   const [shareCode, setShareCode] = useState("");
@@ -137,6 +138,7 @@ export default function DocumentShare() {
           </div>
         )}
       </div>
+      <PromotionCarousel placement="sender" />
     </main>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import AdminPromotions from "@/components/AdminPromotions";
 export default function Admin() {
   const [logged, setLogged] = useState(false);
   const [code, setCode] = useState("");
@@ -166,6 +167,51 @@ export default function Admin() {
                 </div>
               ))}
             </div>
+            <AdminPromotions />
+            <section className="card" style={{ marginTop: 18 }}>
+              <h2>Monetization</h2>
+              <p className="muted">
+                Core sharing remains free. These statuses show configuration
+                only; no ad, sponsor, or affiliate receives share content.
+              </p>
+              <div className="statgrid">
+                {[
+                  [
+                    "Advertisements",
+                    data.monetization.advertisementsConfigured
+                      ? "Configured (opt-in)"
+                      : data.monetization.advertisementsEnabled
+                        ? "Missing client or slot"
+                        : "Off",
+                  ],
+                  [
+                    "Sponsor",
+                    data.monetization.sponsorConfigured ? "Configured" : "Off",
+                  ],
+                  [
+                    "Support URL",
+                    data.monetization.supportUrlConfigured
+                      ? "Configured"
+                      : "Not configured",
+                  ],
+                  [
+                    "Partnership contact",
+                    data.monetization.partnershipContactConfigured
+                      ? "Configured"
+                      : "Not configured",
+                  ],
+                  [
+                    "Affiliate tools",
+                    `${data.monetization.affiliateCount} configured`,
+                  ],
+                ].map(([label, value]) => (
+                  <div className="stat" key={label}>
+                    <span className="muted">{label}</span>
+                    <strong className="monetization-stat-value">{value}</strong>
+                  </div>
+                ))}
+              </div>
+            </section>
             <section className="card" style={{ marginTop: 18 }}>
               <h2>All Shares</h2>
               <p className="muted">

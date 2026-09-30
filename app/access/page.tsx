@@ -2,6 +2,7 @@
 import { Suspense, useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import PromotionCarousel from "@/components/PromotionCarousel";
 export default function Access() {
   return (
     <Suspense fallback={<main className="shell" />}>
@@ -126,6 +127,7 @@ function AccessContent() {
           </div>
         )}
       </div>
+      <PromotionCarousel placement="receiver" />
     </main>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import PromotionCarousel from "@/components/PromotionCarousel";
 export default function TextShare() {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
@@ -155,6 +156,7 @@ export default function TextShare() {
           </div>
         )}
       </div>
+      <PromotionCarousel placement="sender" />
     </main>
   );
 }
