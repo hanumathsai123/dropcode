@@ -47,9 +47,9 @@ export async function POST(req: Request) {
           from: sender,
           to: [process.env.SUPPORT_EMAIL || "support.hanubot@gmail.com"],
           reply_to: email,
-          subject: "New CodeDrop support request",
+          subject: "New DropCode support request",
           text: [
-            "A new CodeDrop recovery request was submitted.",
+            "A new DropCode recovery request was submitted.",
             `Requester: ${email}`,
             `Share code: ${code || "not provided"}`,
             `Reason: ${reason}`,

@@ -34,7 +34,7 @@ export default function DocumentShare() {
     <main className="shell">
       <nav className="nav">
         <Link className="brand" href="/">
-          Code<span>Drop</span>
+          Drop<span>Code</span>
         </Link>
         <Link href="/access" className="btn secondary">
           Enter Code

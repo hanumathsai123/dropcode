@@ -113,7 +113,7 @@ export default function Admin() {
       <main className="shell">
         <div className="page card stack">
           <Link className="brand" href="/">
-            Code<span>Drop</span>
+            Drop<span>Code</span>
           </Link>
           <h1>Admin Access</h1>
           <p className="muted">
@@ -137,7 +137,7 @@ export default function Admin() {
     <main className="admin">
       <nav className="nav">
         <Link className="brand" href="/">
-          Code<span>Drop</span> Admin
+          Drop<span>Code</span> Admin
         </Link>
         <div className="row">
           <button className="btn secondary" onClick={() => location.reload()}>
@@ -216,7 +216,7 @@ export default function Admin() {
               <h2>All Shares</h2>
               <p className="muted">
                 Administrative view includes stored share codes and text content
-                because CodeDrop is designed to support code recovery.
+                because DropCode is designed to support code recovery.
               </p>
               <div className="tablewrap">
                 {documentError && <div className="notice error">{documentError}</div>}

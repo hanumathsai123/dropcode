@@ -45,8 +45,8 @@ export async function POST(req: NextRequest) {
         from: sender,
         to: [recovery.requester_email],
         reply_to: process.env.SUPPORT_EMAIL || "support.hanubot@gmail.com",
-        subject: "Your CodeDrop support request was resolved",
-        text: "Your CodeDrop recovery request has been marked as successfully resolved by support. If you still need help, reply to this email.",
+        subject: "Your DropCode support request was resolved",
+        text: "Your DropCode recovery request has been marked as successfully resolved by support. If you still need help, reply to this email.",
       }),
       cache: "no-store",
     });

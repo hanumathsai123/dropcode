@@ -40,7 +40,7 @@ export default function TextShare() {
     <main className="shell">
       <nav className="nav">
         <Link className="brand" href="/">
-          Code<span>Drop</span>
+          Drop<span>Code</span>
         </Link>
         <Link href="/access" className="btn secondary">
           Enter Code
@@ -55,7 +55,7 @@ export default function TextShare() {
         {result ? (
           <div className="stack">
             <div className="notice success">
-              Your share is ready. CodeDrop support admins can access stored
+              Your share is ready. DropCode support admins can access stored
               shares to help with recovery requests.
             </div>
             <div className="code">{result}</div>

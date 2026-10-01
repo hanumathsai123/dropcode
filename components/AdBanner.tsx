@@ -78,7 +78,7 @@ export default function AdBanner({ enabled, client, slot }: AdBannerProps) {
       ) : (
         <div className="ad-consent-copy">
           <p>
-            Optional ads help support CodeDrop. Google&apos;s ad script loads only
+            Optional ads help support DropCode. Google&apos;s ad script loads only
             if you allow it.
           </p>
           <div className="row">

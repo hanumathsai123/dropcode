@@ -60,7 +60,7 @@ export default function PromotionCarousel({ placement }: PromotionCarouselProps)
       <div className="promotion-portal-heading">
         <div>
           <span className="promotion-label">Sponsored</span>
-          <h2>Supporters of CodeDrop</h2>
+          <h2>Supporters of DropCode</h2>
         </div>
         {activePromotions.length > 1 && (
           <div className="promotion-controls">

@@ -42,7 +42,7 @@ function AccessContent() {
     <main className="shell">
       <nav className="nav">
         <Link className="brand" href="/">
-          Code<span>Drop</span>
+          Drop<span>Code</span>
         </Link>
       </nav>
       <div className="page">
@@ -68,7 +68,7 @@ function AccessContent() {
             <div className="notice">
               <b>Forgot your code?</b>
               <br />
-              Contact CodeDrop Support. CodeDrop may be able to assist with code
+              Contact DropCode Support. DropCode may be able to assist with code
               recovery after reviewing your request.
               <br />
               <br />
