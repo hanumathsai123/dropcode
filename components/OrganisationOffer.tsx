@@ -3,16 +3,16 @@ import Link from "next/link";
 type OrganisationOfferProps = { email: string };
 
 export default function OrganisationOffer({ email }: OrganisationOfferProps) {
-  const subject = encodeURIComponent("Private DropCode for an organisation");
+  const subject = encodeURIComponent("Private DropCodes for an organisation");
 
   return (
     <section className="organisation-panel">
       <div>
         <span className="monetization-label">For organisations</span>
-        <h2>Need a private, branded DropCode?</h2>
+        <h2>Need a private, branded workspace?</h2>
         <p>
           Organisations can ask about a separately deployed instance. The public
-          DropCode product remains free for everyone.
+          The public DropCodes service remains free for everyone.
         </p>
       </div>
       {email ? (
@@ -21,7 +21,7 @@ export default function OrganisationOffer({ email }: OrganisationOfferProps) {
         </a>
       ) : (
         <Link className="btn secondary" href="/support">
-          Contact DropCode
+          Contact DropCodes
         </Link>
       )}
     </section>

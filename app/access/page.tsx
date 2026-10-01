@@ -68,7 +68,7 @@ function AccessContent() {
             <div className="notice">
               <b>Forgot your code?</b>
               <br />
-              Contact DropCode Support. DropCode may be able to assist with code
+              Contact DropCodes Support. DropCodes may be able to assist with code
               recovery after reviewing your request.
               <br />
               <br />

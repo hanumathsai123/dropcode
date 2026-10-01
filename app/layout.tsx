@@ -13,15 +13,15 @@ const metadataBase = deploymentHost
 
 export const metadata: Metadata = {
 	metadataBase,
-	title: 'DropCode | Share Files and Text With a Code',
+	title: 'DropCodes | Share Files and Text With a Code',
 	description:
 		'Share text, code snippets, and documents with a simple access code. No account required.',
-	applicationName: 'DropCode',
+	applicationName: 'DropCodes',
 	openGraph: {
-		title: 'DropCode | Share Files and Text With a Code',
+		title: 'DropCodes | Share Files and Text With a Code',
 		description:
 			'Share text, code snippets, and documents with a simple access code. No account required.',
-		siteName: 'DropCode',
+		siteName: 'DropCodes',
 		type: 'website',
 	},
 };

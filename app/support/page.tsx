@@ -29,7 +29,7 @@ export default function Support() {
     <main className="shell">
       <nav className="nav">
         <Link className="brand" href="/">
-          Drop<span>Code</span>
+          Drop<span>Codes</span>
         </Link>
       </nav>
       <div className="page card stack">

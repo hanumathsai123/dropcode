@@ -15,7 +15,7 @@ export default function Home() {
     <main className="shell">
       <nav className="nav">
         <Link className="brand" href="/">
-          Drop<span>Code</span>
+          Drop<span>Codes</span>
         </Link>
         <div className="navlinks">
           <a href="#features">Features</a>
@@ -45,7 +45,7 @@ export default function Home() {
         <div className="section-heading">
           <div className="eyebrow">MADE FOR QUICK, SIMPLE SHARING</div>
           <h2>Everything you need. Nothing to install.</h2>
-          <p>DropCode keeps sharing straightforward from the first click to the last view.</p>
+          <p>DropCodes keeps sharing straightforward from the first click to the last view.</p>
         </div>
         <div className="feature-grid">
           <article className="feature-item">
@@ -91,7 +91,7 @@ export default function Home() {
         />
       )}
       <footer className="footer">
-        DropCode · Simple, code-based sharing.
+        DropCodes · Simple, code-based sharing.
         <div className="footer-links">
           <Link href="/privacy">Privacy</Link>
           <Link href="/terms">Terms</Link>

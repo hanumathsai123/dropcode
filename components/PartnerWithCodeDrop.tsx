@@ -4,7 +4,7 @@ export default function PartnerWithCodeDrop({ email }: PartnerWithCodeDropProps)
   return (
     <section className="monetization-panel">
       <span className="monetization-label">Business</span>
-      <h2>Partner with DropCode</h2>
+      <h2>Partner with DropCodes</h2>
       <p>
         Get in touch about sponsorships, developer-tool or college partnerships,
         and business collaborations.
@@ -12,7 +12,7 @@ export default function PartnerWithCodeDrop({ email }: PartnerWithCodeDropProps)
       {email ? (
         <a
           className="text-link"
-          href={`mailto:${email}?subject=DropCode%20partnership`}
+          href={`mailto:${email}?subject=DropCodes%20partnership`}
         >
           {email}
         </a>

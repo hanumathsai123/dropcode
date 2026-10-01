@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import AdminPromotions from "@/components/AdminPromotions";
+import MaintenanceControl from "@/components/MaintenanceControl";
 export default function Admin() {
   const [logged, setLogged] = useState(false);
   const [code, setCode] = useState("");
@@ -113,7 +114,7 @@ export default function Admin() {
       <main className="shell">
         <div className="page card stack">
           <Link className="brand" href="/">
-            Drop<span>Code</span>
+            Drop<span>Codes</span>
           </Link>
           <h1>Admin Access</h1>
           <p className="muted">
@@ -137,7 +138,7 @@ export default function Admin() {
     <main className="admin">
       <nav className="nav">
         <Link className="brand" href="/">
-          Drop<span>Code</span> Admin
+          Drop<span>Codes</span> Admin
         </Link>
         <div className="row">
           <button className="btn secondary" onClick={() => location.reload()}>
@@ -167,6 +168,7 @@ export default function Admin() {
                 </div>
               ))}
             </div>
+            <MaintenanceControl />
             <AdminPromotions />
             <section className="card" style={{ marginTop: 18 }}>
               <h2>Monetization</h2>
@@ -216,7 +218,7 @@ export default function Admin() {
               <h2>All Shares</h2>
               <p className="muted">
                 Administrative view includes stored share codes and text content
-                because DropCode is designed to support code recovery.
+                because DropCodes is designed to support code recovery.
               </p>
               <div className="tablewrap">
                 {documentError && <div className="notice error">{documentError}</div>}

@@ -1,29 +1,29 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Terms | DropCode',
-  description: 'Terms for using the DropCode file and text sharing service.',
+  title: 'Terms | DropCodes',
+  description: 'Terms for using the DropCodes file and text sharing service.',
 };
 
 export default function Terms() {
   return (
     <main className="shell">
       <nav className="nav">
-        <Link className="brand" href="/">Drop<span>Code</span></Link>
+        <Link className="brand" href="/">Drop<span>Codes</span></Link>
         <Link href="/">Home</Link>
       </nav>
       <article className="page card legal-page">
         <h1>Terms of Use</h1>
         <p className="muted">Last updated: October 1, 2026</p>
         <p>
-          By using DropCode, you agree to use the service lawfully and follow
+          By using DropCodes, you agree to use the service lawfully and follow
           these terms.
         </p>
         <h2>Your content</h2>
         <p>
           You are responsible for the text and files you share and for having the
           rights and permission to share them. Do not upload unlawful, harmful,
-          or infringing content, or use DropCode to violate another person&apos;s
+          or infringing content, or use DropCodes to violate another person&apos;s
           rights.
         </p>
         <h2>Share codes and availability</h2>

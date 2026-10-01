@@ -25,7 +25,7 @@ export default function PromotionCarousel({ placement }: PromotionCarouselProps)
     };
 
     void loadPromotions();
-    const refreshTimer = window.setInterval(loadPromotions, 30 * 1000);
+    const refreshTimer = window.setInterval(loadPromotions, 15 * 1000);
     const clockTimer = window.setInterval(() => setNow(Date.now()), 1000);
     return () => {
       mounted = false;
@@ -60,7 +60,7 @@ export default function PromotionCarousel({ placement }: PromotionCarouselProps)
       <div className="promotion-portal-heading">
         <div>
           <span className="promotion-label">Sponsored</span>
-          <h2>Supporters of DropCode</h2>
+          <h2>Supporters of DropCodes</h2>
         </div>
         {activePromotions.length > 1 && (
           <div className="promotion-controls">
@@ -75,6 +75,9 @@ export default function PromotionCarousel({ placement }: PromotionCarouselProps)
         )}
       </div>
       <PromotionCard key={`${placement}:${activePromotions[index].id}`} promotion={activePromotions[index]} />
+      <span className="sr-only" aria-live="polite">
+        Promotion now showing: {activePromotions[index].company_name}, {activePromotions[index].title}
+      </span>
     </aside>
   );
 }

@@ -5,7 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
   if (!siteUrl) return [];
 
-  return ['', '/support', '/access', '/share/text', '/share/document'].map(
+  return ['', '/support', '/privacy', '/terms', '/access', '/share/text', '/share/document'].map(
     (path) => ({
       url: new URL(path, siteUrl).toString(),
       changeFrequency: path === '' ? 'weekly' : 'monthly',
