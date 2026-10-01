@@ -2,6 +2,7 @@ import './globals.css';
 import './monetization.css';
 import './dropcode.css';
 import type { Metadata } from 'next';
+import LaunchAnnouncement from '@/components/LaunchAnnouncement';
 
 const deploymentHost =
 	process.env.NEXT_PUBLIC_SITE_URL ||
@@ -29,7 +30,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang="en">
-			<body>{children}</body>
+			<body>
+				<LaunchAnnouncement />
+				{children}
+			</body>
 		</html>
 	);
 }

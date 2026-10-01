@@ -898,6 +898,10 @@ a {
   background: linear-gradient(110deg, #fff 0%, #fff 72%, #fff4f4 100%);
 }
 
+.maintenance-control.is-error {
+  border-left-color: #dc606a;
+}
+
 .maintenance-heading,
 .maintenance-footer {
   display: flex;
@@ -969,6 +973,96 @@ a {
 
 .maintenance-resume:hover:not(:disabled) {
   background: #116c4d;
+}
+
+.launch-settings {
+  margin-top: 20px;
+  padding: 18px;
+  border: 1px solid #d9e9e5;
+  border-radius: 7px;
+  background: linear-gradient(110deg, #f7fcfa, #fff 68%, #f0f9fc);
+}
+
+.launch-settings-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.launch-settings-heading h3 {
+  margin: 5px 0;
+  color: #1d4850;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+}
+
+.launch-settings-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.maintenance-status.launch-active {
+  border-color: #c6e6db;
+  background: #eaf8f2;
+  color: #207152;
+}
+
+.launch-enable {
+  background: #16845f;
+  color: #fff;
+}
+
+.launch-enable:hover:not(:disabled) {
+  background: #116c4d;
+}
+
+.launch-announcement {
+  display: flex;
+  min-height: 46px;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px 13px;
+  padding: 8px 18px;
+  background: linear-gradient(100deg, #087ea3, #117c70 65%, #198963);
+  color: #fff;
+  animation: panel-arrive 400ms ease both;
+}
+
+.launch-announcement-mark {
+  display: grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  font-size: 8px;
+  font-weight: 700;
+}
+
+.launch-announcement-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.launch-announcement-copy {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 11px;
+}
+
+.launch-announcement-spark {
+  padding: 3px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: 4px;
+  color: #e9ffb9;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
 @media (max-width: 700px) {
@@ -1068,7 +1162,8 @@ a {
   }
 
   .maintenance-heading,
-  .maintenance-footer {
+  .maintenance-footer,
+  .launch-settings-heading {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -1079,6 +1174,17 @@ a {
 
   .maintenance-footer .btn {
     flex: 1;
+  }
+
+  .launch-announcement {
+    justify-content: flex-start;
+    gap: 7px 9px;
+    padding: 9px 14px;
+  }
+
+  .launch-announcement-copy {
+    flex-basis: calc(100% - 45px);
+    margin-left: 35px;
   }
 
   .receive-hint {
