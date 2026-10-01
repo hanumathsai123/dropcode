@@ -22,6 +22,24 @@ function maintenancePage(message: string) {
   </style></head><body><main><span class="mark" aria-hidden="true">D</span><h1>We’ll be back soon</h1><p>${escapeHtml(message)}</p><small>DropCodes</small></main></body></html>`;
 }
 
+function maintenanceResponse(pathname: string, message: string) {
+  if (pathname.startsWith('/api/')) {
+    return NextResponse.json(
+      { error: message, maintenance: true },
+      { status: 503, headers: { 'Retry-After': '300', 'Cache-Control': 'no-store' } },
+    );
+  }
+
+  return new NextResponse(maintenancePage(message), {
+    status: 503,
+    headers: {
+      'Content-Type': 'text/html; charset=utf-8',
+      'Cache-Control': 'no-store',
+      'Retry-After': '300',
+    },
+  });
+}
+
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
   if (
@@ -31,6 +49,13 @@ export async function proxy(request: NextRequest) {
     pathname.startsWith('/api/admin/')
   ) {
     return NextResponse.next();
+  }
+
+  const forcedMaintenance = process.env.DROPCODES_MAINTENANCE_MODE === 'true';
+  const defaultMessage = 'We are making a few improvements. Please check back shortly.';
+  if (forcedMaintenance) {
+    const message = process.env.DROPCODES_MAINTENANCE_MESSAGE?.trim() || defaultMessage;
+    return maintenanceResponse(pathname, message);
   }
 
   const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -58,23 +83,8 @@ export async function proxy(request: NextRequest) {
     const settings = rows[0];
     if (!settings?.maintenance_enabled) return NextResponse.next();
 
-    const message = settings.maintenance_message?.trim() ||
-      'We are making a few improvements. Please check back shortly.';
-    if (pathname.startsWith('/api/')) {
-      return NextResponse.json(
-        { error: message, maintenance: true },
-        { status: 503, headers: { 'Retry-After': '300', 'Cache-Control': 'no-store' } },
-      );
-    }
-
-    return new NextResponse(maintenancePage(message), {
-      status: 503,
-      headers: {
-        'Content-Type': 'text/html; charset=utf-8',
-        'Cache-Control': 'no-store',
-        'Retry-After': '300',
-      },
-    });
+    const message = settings.maintenance_message?.trim() || defaultMessage;
+    return maintenanceResponse(pathname, message);
   } catch {
     return NextResponse.next();
   }

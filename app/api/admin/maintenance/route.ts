@@ -11,7 +11,7 @@ function settingsError(error: { code?: string; message?: string }) {
   return NextResponse.json(
     {
       error: tableMissing
-        ? 'Run the latest supabase/migrations/003_site_settings.sql in the Supabase SQL Editor to enable service and launch controls.'
+        ? 'Run the latest supabase/migrations/003_site_settings.sql in Supabase to enable dashboard controls. Emergency option: set DROPCODES_MAINTENANCE_MODE=true and DROPCODES_MAINTENANCE_MESSAGE in Vercel, then redeploy.'
         : 'Could not load maintenance settings.',
     },
     { status: tableMissing ? 503 : 500 },
