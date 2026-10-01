@@ -12,7 +12,7 @@ export default function OrganisationOffer({ email }: OrganisationOfferProps) {
         <h2>Need a private, branded workspace?</h2>
         <p>
           Organisations can ask about a separately deployed instance. The public
-          The public DropCodes service remains free for everyone.
+            DropCodes service remains free for everyone.
         </p>
       </div>
       {email ? (
