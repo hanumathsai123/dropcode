@@ -3,14 +3,9 @@ import './monetization.css';
 import './dropcode.css';
 import type { Metadata } from 'next';
 import LaunchAnnouncement from '@/components/LaunchAnnouncement';
+import { getSiteUrl } from '@/lib/site';
 
-const deploymentHost =
-	process.env.NEXT_PUBLIC_SITE_URL ||
-	process.env.VERCEL_PROJECT_PRODUCTION_URL ||
-	process.env.VERCEL_URL;
-const metadataBase = deploymentHost
-	? new URL(deploymentHost.startsWith('http') ? deploymentHost : `https://${deploymentHost}`)
-	: undefined;
+const metadataBase = getSiteUrl();
 
 export const metadata: Metadata = {
 	metadataBase,

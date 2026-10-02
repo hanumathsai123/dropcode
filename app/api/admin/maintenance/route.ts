@@ -12,7 +12,7 @@ function settingsError(error: { code?: string; message?: string }) {
     {
       error: tableMissing
         ? 'Run the latest supabase/migrations/003_site_settings.sql in Supabase to enable dashboard controls. Emergency option: set DROPCODES_MAINTENANCE_MODE=true and DROPCODES_MAINTENANCE_MESSAGE in Vercel, then redeploy.'
-        : 'Could not load maintenance settings.',
+        : error.message || 'Could not load maintenance settings.',
     },
     { status: tableMissing ? 503 : 500 },
   );
@@ -23,19 +23,26 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const { data, error } = await adminSupabase()
-    .from('site_settings')
-    .select('maintenance_enabled, maintenance_message, launch_announcement_enabled, launch_announcement_message')
-    .eq('id', 1)
-    .maybeSingle();
-  if (error) return settingsError(error);
+  try {
+    const { data, error } = await adminSupabase()
+      .from('site_settings')
+      .select('maintenance_enabled, maintenance_message, launch_announcement_enabled, launch_announcement_message')
+      .eq('id', 1)
+      .maybeSingle();
+    if (error) return settingsError(error);
 
-  return NextResponse.json({
-    enabled: data?.maintenance_enabled ?? false,
-    message: data?.maintenance_message ?? '',
-    launchAnnouncementEnabled: data?.launch_announcement_enabled ?? false,
-    launchAnnouncementMessage: data?.launch_announcement_message ?? '',
-  });
+    return NextResponse.json({
+      enabled: data?.maintenance_enabled ?? false,
+      message: data?.maintenance_message ?? '',
+      launchAnnouncementEnabled: data?.launch_announcement_enabled ?? false,
+      launchAnnouncementMessage: data?.launch_announcement_message ?? '',
+    });
+  } catch (error) {
+    return settingsError({
+      code: typeof error === 'object' && error && 'code' in error ? String(error.code) : undefined,
+      message: error instanceof Error ? error.message : 'Could not load maintenance settings.',
+    });
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -82,7 +89,10 @@ export async function POST(request: NextRequest) {
       launchAnnouncementEnabled: data.launch_announcement_enabled,
       launchAnnouncementMessage: data.launch_announcement_message,
     });
-  } catch {
-    return NextResponse.json({ error: 'Could not save maintenance settings.' }, { status: 500 });
+  } catch (error) {
+    return settingsError({
+      code: typeof error === 'object' && error && 'code' in error ? String(error.code) : undefined,
+      message: error instanceof Error ? error.message : 'Could not save maintenance settings.',
+    });
   }
 }

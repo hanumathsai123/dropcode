@@ -2,6 +2,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import PromotionCarousel from "@/components/PromotionCarousel";
+import { TEMPORARY_UNAVAILABLE_MESSAGE } from "@/lib/public-messages";
+import { uploadShareFile } from "@/lib/share-upload";
 export default function DocumentShare() {
   const [file, setFile] = useState<File | null>(null);
   const [shareCode, setShareCode] = useState("");
@@ -15,17 +17,22 @@ export default function DocumentShare() {
     setBusy(true);
     setErr("");
     try {
-      const fd = new FormData();
-      fd.append("file", file);
-      fd.append("shareCode", shareCode);
-      fd.append("expiryHours", expiry);
-      fd.append("maxDownloads", max);
-      const r = await fetch("/api/share", { method: "POST", body: fd });
+      const r = await uploadShareFile(file, {
+        shareCode,
+        expiryHours: Number(expiry),
+        maxDownloads: Number(max),
+      });
       const j = await r.json();
       if (!r.ok) throw Error(j.error || "Upload failed");
       setResult(j.share_code);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "Upload failed");
+      setErr(
+        e instanceof TypeError
+          ? TEMPORARY_UNAVAILABLE_MESSAGE
+          : e instanceof Error
+            ? e.message
+            : "Upload failed",
+      );
     } finally {
       setBusy(false);
     }

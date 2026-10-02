@@ -81,7 +81,6 @@ export default function AdminPromotions() {
   const [error, setError] = useState("");
 
   async function refresh() {
-    setLoading(true);
     try {
       const response = await fetch("/api/admin/promotions", { cache: "no-store" });
       const result = await response.json();
@@ -95,7 +94,8 @@ export default function AdminPromotions() {
   }
 
   useEffect(() => {
-    void refresh();
+    const timer = window.setTimeout(() => void refresh(), 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {

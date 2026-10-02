@@ -7,6 +7,7 @@ export default function Admin() {
   const [logged, setLogged] = useState(false);
   const [code, setCode] = useState("");
   const [err, setErr] = useState("");
+  const [overviewError, setOverviewError] = useState("");
   const [documentError, setDocumentError] = useState("");
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(false);
@@ -16,31 +17,46 @@ export default function Admin() {
   const [recoveryActionId, setRecoveryActionId] = useState<string | null>(null);
   const [recoveryMessage, setRecoveryMessage] = useState("");
   async function login() {
-    const r = await fetch("/api/admin/login", {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ code }),
-    });
-    const j = await r.json();
-    if (!r.ok) {
-      setErr(j.error);
-      return;
+    setErr("");
+    try {
+      const r = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ code }),
+      });
+      const j = await r.json();
+      if (!r.ok) {
+        setErr(j.error || "Could not sign in to the admin panel.");
+        return;
+      }
+      setLogged(true);
+      void load();
+    } catch (caught) {
+      setErr(caught instanceof Error ? caught.message : "Could not sign in to the admin panel.");
     }
-    setLogged(true);
-    load();
   }
   async function load() {
     setLoading(true);
-    const r = await fetch("/api/admin/overview");
-    if (r.status === 401) {
-      setLogged(false);
+    setOverviewError("");
+    try {
+      const r = await fetch("/api/admin/overview", { cache: "no-store" });
+      if (r.status === 401) {
+        setLogged(false);
+        setData(null);
+        return;
+      }
+      const j = await r.json();
+      if (!r.ok) throw new Error(j.error || `Admin overview failed (${r.status}).`);
+      setLogged(true);
+      setData(j);
+    } catch (caught) {
+      setLogged(true);
+      setOverviewError(
+        caught instanceof Error ? caught.message : "Admin overview could not be loaded.",
+      );
+    } finally {
       setLoading(false);
-      return;
     }
-    const j = await r.json();
-    setLogged(true);
-    setData(j);
-    setLoading(false);
   }
   async function unlockDocument(shareId: string) {
     setUnlockingDocument(shareId);
@@ -99,12 +115,21 @@ export default function Admin() {
     if (!logged) return;
     const events = new EventSource("/api/admin/realtime");
     const refresh = async () => {
-      const response = await fetch("/api/admin/overview");
-      if (response.status === 401) {
-        setLogged(false);
-        return;
+      try {
+        const response = await fetch("/api/admin/overview", { cache: "no-store" });
+        if (response.status === 401) {
+          setLogged(false);
+          return;
+        }
+        const result = await response.json();
+        if (!response.ok) throw new Error(result.error || `Admin overview failed (${response.status}).`);
+        setData(result);
+        setOverviewError("");
+      } catch (caught) {
+        setOverviewError(
+          caught instanceof Error ? caught.message : "Admin overview could not be loaded.",
+        );
       }
-      if (response.ok) setData(await response.json());
     };
     events.addEventListener("refresh", refresh);
     return () => events.close();
@@ -149,6 +174,15 @@ export default function Admin() {
           </a>
         </div>
       </nav>
+      {overviewError && (
+        <div className="notice error" role="alert">
+          <strong>Admin service status</strong>
+          <p>{overviewError}</p>
+          <button className="btn secondary" type="button" onClick={() => void load()}>
+            Retry overview
+          </button>
+        </div>
+      )}
       {loading ? (
         <p>Loading dashboard...</p>
       ) : (
@@ -231,6 +265,7 @@ export default function Admin() {
                       <th>Created</th>
                       <th>Expires</th>
                       <th>Views</th>
+                      <th>Downloads</th>
                       <th>Limit</th>
                       <th>Content</th>
                     </tr>
@@ -244,6 +279,7 @@ export default function Admin() {
                         <td>{new Date(x.created_at).toLocaleString()}</td>
                         <td>{new Date(x.expires_at).toLocaleString()}</td>
                         <td>{x.view_count}</td>
+                        <td>{x.kind === "document" ? x.download_count || 0 : "—"}</td>
                         <td>
                           {x.max_views >= 1000000 ? "Unlimited" : x.max_views}
                         </td>

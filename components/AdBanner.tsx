@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useEffectEvent, useState } from "react";
 
 declare global {
   interface Window {
@@ -17,12 +17,17 @@ type AdBannerProps = {
 export default function AdBanner({ enabled, client, slot }: AdBannerProps) {
   const [consent, setConsent] = useState<boolean | null>(null);
 
-  useEffect(() => {
+  const loadConsent = useEffectEvent(() => {
     try {
       setConsent(window.localStorage.getItem("codedrop-ad-consent") === "yes");
     } catch {
       setConsent(false);
     }
+  });
+
+  useEffect(() => {
+    const timer = window.setTimeout(loadConsent, 0);
+    return () => window.clearTimeout(timer);
   }, []);
 
   useEffect(() => {

@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import PromotionCarousel from "@/components/PromotionCarousel";
+import { TEMPORARY_UNAVAILABLE_MESSAGE } from "@/lib/public-messages";
 export default function TextShare() {
   const [content, setContent] = useState("");
   const [title, setTitle] = useState("");
@@ -31,7 +32,13 @@ export default function TextShare() {
       if (!r.ok) throw Error(j.error || "Could not create share");
       setResult(j.share_code);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "Something went wrong");
+      setErr(
+        e instanceof TypeError
+          ? TEMPORARY_UNAVAILABLE_MESSAGE
+          : e instanceof Error
+            ? e.message
+            : "Something went wrong",
+      );
     } finally {
       setBusy(false);
     }

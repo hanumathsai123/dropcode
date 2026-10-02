@@ -1,6 +1,8 @@
 "use client";
 
 import Link from "next/link";
+import { TEMPORARY_UNAVAILABLE_MESSAGE } from "@/lib/public-messages";
+import { uploadShareFile } from "@/lib/share-upload";
 import { useState } from "react";
 
 type ShareMode = "text" | "file";
@@ -51,24 +53,25 @@ export default function TransferWorkspace() {
                 maxViews: Number(maxViews),
               }),
             })
-          : await uploadFile();
+          : await uploadShareFile(file as File, {
+              shareCode,
+              expiryHours: Number(expiry),
+              maxDownloads: Number(maxViews),
+            });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error || "Could not create share.");
       setResultCode(data.share_code);
     } catch (cause) {
-      setError(cause instanceof Error ? cause.message : "Could not create share.");
+      setError(
+        cause instanceof TypeError
+          ? TEMPORARY_UNAVAILABLE_MESSAGE
+          : cause instanceof Error
+            ? cause.message
+            : "Could not create share.",
+      );
     } finally {
       setBusy(false);
     }
-  }
-
-  async function uploadFile() {
-    const form = new FormData();
-    form.append("file", file as File);
-    form.append("shareCode", shareCode);
-    form.append("expiryHours", expiry);
-    form.append("maxDownloads", maxViews);
-    return fetch("/api/share", { method: "POST", body: form });
   }
 
   async function copyCode() {

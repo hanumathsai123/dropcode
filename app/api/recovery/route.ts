@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { adminSupabase } from "@/lib/supabase";
+import { TEMPORARY_UNAVAILABLE_MESSAGE } from "@/lib/public-messages";
 export async function POST(req: Request) {
   try {
     const b = await req.json();
@@ -65,9 +66,10 @@ export async function POST(req: Request) {
 
     return NextResponse.json({ ok: true, emailSent });
   } catch (e) {
+    console.error("Recovery request failed:", e);
     return NextResponse.json(
-      { error: e instanceof Error ? e.message : "Could not submit request." },
-      { status: 500 },
+      { error: TEMPORARY_UNAVAILABLE_MESSAGE },
+      { status: 503, headers: { "Retry-After": "60" } },
     );
   }
 }

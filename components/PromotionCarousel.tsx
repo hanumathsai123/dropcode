@@ -41,7 +41,6 @@ export default function PromotionCarousel({ placement }: PromotionCarouselProps)
   });
 
   useEffect(() => {
-    setIndex((current) => (activePromotions.length ? current % activePromotions.length : 0));
     if (activePromotions.length < 2) return;
     const rotationTimer = window.setInterval(() => {
       setIndex((current) => (current + 1) % activePromotions.length);
@@ -51,6 +50,7 @@ export default function PromotionCarousel({ placement }: PromotionCarouselProps)
 
   if (!activePromotions.length) return null;
 
+  const activeIndex = index % activePromotions.length;
   const previous = () =>
     setIndex((current) => (current - 1 + activePromotions.length) % activePromotions.length);
   const next = () => setIndex((current) => (current + 1) % activePromotions.length);
@@ -74,9 +74,9 @@ export default function PromotionCarousel({ placement }: PromotionCarouselProps)
           </div>
         )}
       </div>
-      <PromotionCard key={`${placement}:${activePromotions[index].id}`} promotion={activePromotions[index]} />
+      <PromotionCard key={`${placement}:${activePromotions[activeIndex].id}`} promotion={activePromotions[activeIndex]} />
       <span className="sr-only" aria-live="polite">
-        Promotion now showing: {activePromotions[index].company_name}, {activePromotions[index].title}
+        Promotion now showing: {activePromotions[activeIndex].company_name}, {activePromotions[activeIndex].title}
       </span>
     </aside>
   );

@@ -1,8 +1,9 @@
 "use client";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useEffectEvent, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import PromotionCarousel from "@/components/PromotionCarousel";
+import { TEMPORARY_UNAVAILABLE_MESSAGE } from "@/lib/public-messages";
 export default function Access() {
   return (
     <Suspense fallback={<main className="shell" />}>
@@ -13,7 +14,8 @@ export default function Access() {
 
 function AccessContent() {
   const q = useSearchParams();
-  const [code, setCode] = useState(q.get("code") || "");
+  const queryCode = q.get("code") || "";
+  const [code, setCode] = useState(queryCode);
   const [data, setData] = useState<any>(null);
   const [err, setErr] = useState("");
   const [busy, setBusy] = useState(false);
@@ -30,14 +32,25 @@ function AccessContent() {
       if (!r.ok) throw Error(j.error || "Share unavailable");
       setData(j);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : "Share unavailable");
+      setErr(
+        e instanceof TypeError
+          ? TEMPORARY_UNAVAILABLE_MESSAGE
+          : e instanceof Error
+            ? e.message
+            : "Share unavailable",
+      );
     } finally {
       setBusy(false);
     }
   }
+  const openQueryShare = useEffectEvent(() => {
+    void open();
+  });
   useEffect(() => {
-    if (q.get("code")) open();
-  }, []);
+    if (!queryCode) return;
+    const timer = window.setTimeout(openQueryShare, 0);
+    return () => window.clearTimeout(timer);
+  }, [queryCode]);
   return (
     <main className="shell">
       <nav className="nav">

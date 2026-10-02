@@ -1,21 +1,38 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { TEMPORARY_UNAVAILABLE_MESSAGE } from "@/lib/public-messages";
 
 export default function LaunchAnnouncement() {
   const [announcement, setAnnouncement] = useState("");
+  const [serviceUnavailable, setServiceUnavailable] = useState(false);
 
   useEffect(() => {
     fetch("/api/site-status", { cache: "no-store" })
       .then(async (response) => {
-        if (!response.ok) return;
+        if (!response.ok) {
+          setServiceUnavailable(true);
+          return;
+        }
         const data = await response.json();
+        if (data.available === false) {
+          setServiceUnavailable(true);
+          return;
+        }
         if (data.enabled && typeof data.message === "string") {
           setAnnouncement(data.message);
         }
       })
-      .catch(() => undefined);
+      .catch(() => setServiceUnavailable(true));
   }, []);
+
+  if (serviceUnavailable) {
+    return (
+      <aside className="notice error service-unavailable" role="status" aria-live="polite">
+        {TEMPORARY_UNAVAILABLE_MESSAGE}
+      </aside>
+    );
+  }
 
   if (!announcement) return null;
 
