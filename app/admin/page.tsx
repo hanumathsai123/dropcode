@@ -188,6 +188,17 @@ export default function Admin() {
       ) : (
         data && (
           <>
+            <header className="admin-overview-heading" aria-label="Admin dashboard overview">
+              <div>
+                <span className="admin-kicker">Operations</span>
+                <h1>Dashboard overview</h1>
+                <p>Monitor shares, recovery requests, and service availability.</p>
+              </div>
+              <span className={`admin-health${overviewError ? " is-warning" : ""}`} role="status">
+                <span aria-hidden="true" />
+                {overviewError ? "Needs attention" : "Database connected"}
+              </span>
+            </header>
             <div className="statgrid">
               {[
                 ["Total Shares", data.stats.total],
